@@ -29,13 +29,13 @@ Usage:
     # Watch the agent play:
     python scripts/rsl_rl/play.py \
         --task VolumeRecon-UR5e-v0 \
-        --checkpoint logs/taha/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
+        --checkpoint logs/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
         --num_episodes 3
 
     # Headless + save poses + save images for VGGT:
     python scripts/rsl_rl/play.py \
         --task VolumeRecon-UR5e-v0 \
-        --checkpoint logs/taha/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
+        --checkpoint logs/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
         --num_episodes 1 \
         --save-poses \
         --save-images \

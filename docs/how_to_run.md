@@ -1,59 +1,36 @@
-# How to Run — RL Viewpoint Selection
+# Activate and navigate
+conda activate env_isaaclab
+cd ~/UR5eVolumRecon
 
-## Setup
+# Train exp_09 from best checkpoint
+python experiments/run_experiment.py \
+  --num_envs 16 \
+  --max_iterations 5000 \
+  --experiment_name exp_10 \
+  --checkpoint logs/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
+  --headless
 
-    cd ~/UR5eVolumRecon
-    conda activate env_isaaclab
+# TensorBoard (open second terminal)
+conda activate env_isaaclab
+tensorboard --logdir ~/UR5eVolumRecon/logs/ --port 6007
 
-## Test environment (1 env, with visualization)
+# Open browser
+http://localhost:6007
 
-    python scripts/test_env.py --num_envs 1
+# Filter to best runs only (paste in TensorBoard regex box)
+exp_05|exp_06|exp_07|exp_09
 
-## Train
+# Evaluate trained policy + save poses
+python scripts/rsl_rl/play.py \
+  --task VolumeRecon-UR5e-v0 \
+  --num_envs 1 \
+  --num_episodes 3 \
+  --checkpoint logs/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
+  --save-poses \
+  --poses-dir outputs/poses/exp_07
 
-    python scripts/rsl_rl/train.py \
-      --task VolumeRecon-UR5e-v0 \
-      --num_envs 32 \
-      --max_iterations 2000 \
-      --headless
+# Check saved poses
+cat outputs/poses/exp_07/episode_01_poses.json
 
-## Continue from checkpoint
-
-    python experiments/taha/run_experiment.py \
-      --num_envs 16 \
-      --max_iterations 5000 \
-      --experiment_name exp_10 \
-      --checkpoint logs/taha/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
-      --headless
-
-## Monitor with TensorBoard
-
-    tensorboard --logdir ~/UR5eVolumRecon/logs/rsl_rl/ --port 6006
-
-Open: http://localhost:6006
-
-## Evaluate policy + save poses
-
-    python scripts/rsl_rl/play.py \
-      --task VolumeRecon-UR5e-v0 \
-      --num_envs 1 \
-      --num_episodes 3 \
-      --checkpoint logs/taha/exp_07_stricter_wasteful/2026-03-22_15-56-14/model_final.pt \
-      --save-poses \
-      --poses-dir outputs/poses/exp_07
-
-## Key experiments
-
-| Exp | Task success | Notes |
-|-----|-------------|-------|
-| exp_06 | 0.4% | Baseline, no shaping |
-| exp_07 | 45.2% | + Proximity shaping |
-| exp_09 | TBD | Stricter wasteful penalty |
-| exp_10 | TBD | Continue from exp_07 |
-
-## MDP
-
-- State: 86D (joints, camera pose, coverage %, 8x8 voxel map)
-- Action: 7D (6 joint deltas + capture trigger)
-- Episode ends: 75% coverage OR 50 captures OR 1000 steps
-- Algorithm: PPO, MLP [256,128,64], 16 parallel envs, gamma=0.99
+# Check training results
+cat logs/exp_09/$(ls -t logs/exp_09/ | head -1)/training_log.json

@@ -1,8 +1,8 @@
 """
-experiments/taha/compare_ply.py
+experiments/compare_ply.py
 Direct comparison between any two .ply files.
 Usage:
-    python experiments/taha/compare_ply.py \
+    python experiments/compare_ply.py \
         --recon reconstruction.ply \
         --gt    ground_truth.ply \
         --output-dir /path/to/output/

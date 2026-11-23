@@ -1,5 +1,5 @@
 """
-experiments/taha/run_full_pipeline.py
+experiments/run_full_pipeline.py
 
 Full pipeline wrapper — Taha.
 
@@ -11,12 +11,12 @@ Usage:
     conda activate bufferx_o3d
 
     # Single scene:
-    python experiments/taha/run_full_pipeline.py \
+    python experiments/run_full_pipeline.py \
         --scene-names air_conditioner_control_camera3 \
         --run-name taha_auto_01
 
     # All scenes:
-    python experiments/taha/run_full_pipeline.py \
+    python experiments/run_full_pipeline.py \
         --run-name taha_batch_01 \
         --cluster-eps 0.05 \
         --cluster-min-pts 30 \
@@ -24,13 +24,13 @@ Usage:
         --min-fraction 0.05
 
     # Skip auto-crop (reuse existing cleaned file):
-    python experiments/taha/run_full_pipeline.py \
+    python experiments/run_full_pipeline.py \
         --scene-names air_conditioner_control_camera3 \
         --run-name taha_auto_01 \
         --skip-crop
 
     # Diagnose one scene without running pipeline:
-    python experiments/taha/run_full_pipeline.py \
+    python experiments/run_full_pipeline.py \
         --scene-names plastic_hammer_camera3 \
         --run-name debug \
         --diagnose-only
@@ -49,23 +49,23 @@ from pathlib import Path
 # ══════════════════════════════════════════════════════════════════════════════
 
 SCENE_ROOT = (
-    "/home/AP_PathMatters/path_matters/datasets/"
+    "/path/to/path_matters/datasets/"
     "Reallife_Dataset_Haroun_Aziz/scenes-others_SUBSAMPLED"
 )
 
 GT_ROOT = (
-    "/home/AP_PathMatters/path_matters/datasets/"
+    "/path/to/path_matters/datasets/"
     "Reallife_Dataset_Haroun_Aziz/scenes-others_SUBSAMPLED"
 )
 
-OUTPUT_BASE = "/home/AP_PathMatters/path_matters/runs/taha"
+OUTPUT_BASE = "/path/to/path_matters/runs"
 
 PIPELINE_SCRIPT = (
-    "/home/AP_PathMatters/path_matters/haroun/Pipeline/"
+    "/path/to/path_matters/haroun/Pipeline/"
     "cc_bufferx_pipeline_package/run_cc_bufferx_pipeline.py"
 )
 
-BUFFERX_ROOT = "/home/AP_PathMatters/BUFFER-X"
+BUFFERX_ROOT = "/path/to/BUFFER-X"
 
 THIS_DIR = Path(__file__).parent
 

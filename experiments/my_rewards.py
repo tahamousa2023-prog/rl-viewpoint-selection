@@ -1,5 +1,5 @@
 """
-experiments/taha/my_rewards.py
+experiments/my_rewards.py
 
 exp_04: Fix proximity problem.
 

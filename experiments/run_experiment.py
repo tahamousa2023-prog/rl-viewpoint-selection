@@ -1,5 +1,5 @@
 """
-experiments/taha/run_experiment.py
+experiments/run_experiment.py
 
 Personal training launcher — Taha.
 
@@ -7,30 +7,30 @@ This script:
     1. Creates the base VolumeReconEnvCfg from the original source
     2. Applies Taha's reward modifications via patch_rewards()
     3. Runs PPO training with RSL-RL
-    4. Saves logs to logs/taha/<experiment_name>/<timestamp>/
+    4. Saves logs to logs/<experiment_name>/<timestamp>/
 
 Run:
     cd ~/UR5eVolumRecon
     conda activate env_isaaclab
 
-    python experiments/taha/run_experiment.py \
+    python experiments/run_experiment.py \
         --num_envs 16 \
         --max_iterations 200 \
         --experiment_name exp_01_camera_facing
 
     # Headless (faster):
-    python experiments/taha/run_experiment.py \
+    python experiments/run_experiment.py \
         --num_envs 32 \
         --max_iterations 2000 \
         --experiment_name exp_01_camera_facing \
         --headless
 
     # Resume from checkpoint:
-    python experiments/taha/run_experiment.py \
+    python experiments/run_experiment.py \
         --num_envs 16 \
         --max_iterations 500 \
         --experiment_name exp_01_resumed \
-        --checkpoint logs/taha/exp_01_camera_facing/2026-XX-XX/model_final.pt
+        --checkpoint logs/exp_01_camera_facing/2026-XX-XX/model_final.pt
 """
 
 from __future__ import annotations
@@ -40,9 +40,9 @@ import sys
 
 # ── Path setup ────────────────────────────────────────────────────────────────
 # Add UR5eVolumRecon root so volume_recon package is found
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 # Add agents/ so rsl_rl_ppo_cfg is found
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../agents"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../agents"))
 # Add this folder so my_rewards is found
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -66,7 +66,7 @@ parser.add_argument(
     "--experiment_name",
     type=str,
     default="exp_01",
-    help="Name for this run — used as subfolder in logs/taha/",
+    help="Name for this run — used as subfolder in logs/",
 )
 parser.add_argument(
     "--checkpoint",
@@ -134,19 +134,19 @@ def main():
     agent_cfg.max_iterations = args_cli.max_iterations
 
     # ── Step 5: Set up log directory ──────────────────────────────────────
-    # Goes to logs/taha/<experiment_name>/<timestamp>/
+    # Goes to logs/<experiment_name>/<timestamp>/
     # Completely separate from teammate's logs/rsl_rl/
     log_dir = os.path.join(
-        os.path.dirname(__file__),          # experiments/taha/
-        "../../logs/taha",                  # → logs/taha/
-        args_cli.experiment_name,           # → logs/taha/exp_01_camera_facing/
+        os.path.dirname(__file__),          # experiments/
+        "../logs",                           # → logs/
+        args_cli.experiment_name,           # → logs/exp_01_camera_facing/
         datetime.now().strftime("%Y-%m-%d_%H-%M-%S"),
     )
     os.makedirs(log_dir, exist_ok=True)
 
     # ── Step 6: Print summary ─────────────────────────────────────────────
     print("\n" + "=" * 65)
-    print("TAHA — VOLUME RECONSTRUCTION EXPERIMENT")
+    print("VOLUME RECONSTRUCTION EXPERIMENT")
     print("=" * 65)
     print(f"  Experiment : {args_cli.experiment_name}")
     print(f"  Num envs   : {args_cli.num_envs}")
@@ -191,7 +191,7 @@ def main():
     print("\n" + "=" * 65)
     print("TRAINING COMPLETE")
     print(f"  Model saved to : {final_path}")
-    print(f"  TensorBoard    : tensorboard --logdir ~/UR5eVolumRecon/logs/taha/ --port 6007")
+    print(f"  TensorBoard    : tensorboard --logdir ~/UR5eVolumRecon/logs/ --port 6007")
     print("=" * 65 + "\n")
 
     env.close()

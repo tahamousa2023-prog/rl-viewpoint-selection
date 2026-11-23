@@ -20,7 +20,7 @@ Episode Flow:
 
 ```bash
 # Navigate to project folder
-cd /home/AP_PathMatters/UR5eActiveRecon
+cd /path/to/UR5eActiveRecon
 
 # Install the package
 pip install -e source/active_recon
@@ -63,10 +63,10 @@ python scripts/rsl_rl/play.py \
 
 ```python
 # Your robot USD
-UR5E_USD_PATH = "/home/AP_PathMatters/path_matters/Isaacsim/envs/ur5e_w_cam_w_plane.usd"
+UR5E_USD_PATH = "/path/to/path_matters/Isaacsim/envs/ur5e_w_cam_w_plane.usd"
 
 # Your object USD  
-OBJECT_USD_PATH = "/home/AP_PathMatters/path_matters/datasets/yoda/Baby_Yoda_v2.usd"
+OBJECT_USD_PATH = "/path/to/path_matters/datasets/yoda/Baby_Yoda_v2.usd"
 ```
 
 ### Key Parameters

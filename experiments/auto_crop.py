@@ -1,5 +1,5 @@
 """
-experiments/taha/auto_crop.py
+experiments/auto_crop.py
 
 Automatic background removal for a reconstructed point cloud.
 
@@ -19,18 +19,18 @@ Usage:
     conda activate bufferx_o3d
 
     # Default:
-    python experiments/taha/auto_crop.py \
+    python experiments/auto_crop.py \
         --input  /path/to/points.ply \
         --output /path/to/points_cleaned.ply
 
     # Diagnose only — print all clusters, save nothing:
-    python experiments/taha/auto_crop.py \
+    python experiments/auto_crop.py \
         --input  /path/to/points.ply \
         --output /path/to/points_cleaned.ply \
         --diagnose
 
     # Tune parameters:
-    python experiments/taha/auto_crop.py \
+    python experiments/auto_crop.py \
         --input  /path/to/points.ply \
         --output /path/to/points_cleaned.ply \
         --num-planes     2      \
